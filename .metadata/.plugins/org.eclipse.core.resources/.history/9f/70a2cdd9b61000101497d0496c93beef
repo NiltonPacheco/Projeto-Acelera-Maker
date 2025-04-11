@@ -1,0 +1,10 @@
+package modelo.umpraum;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table (name = "assentos")
+public class Assento {
+
+}

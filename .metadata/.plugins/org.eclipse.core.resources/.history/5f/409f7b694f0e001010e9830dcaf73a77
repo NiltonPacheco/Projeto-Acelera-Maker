@@ -1,0 +1,16 @@
+package calculadora;
+
+import java.awt.Color;
+
+import javax.swing.JButton;
+
+@SuppressWarnings("serial")
+public class Botao  extends JButton{
+	private void botao(String label, Color cor) {
+		setText(texto);
+		setOpaque(true);
+		setBackground(cor);
+		setFont(font);
+
+	}
+}

@@ -1,0 +1,146 @@
+package teste;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class CalculadoraSemBordas extends JFrame {
+    private JTextField display;
+    private double primeiroNumero;
+    private String operacao;
+
+    public CalculadoraSemBordas() {
+        // Configuração básica da janela
+        setTitle("Calculadora");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(300, 400);
+        setLocationRelativeTo(null);
+        getRootPane().setBorder(null); // Remove borda do frame
+
+        // Painel principal
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBorder(null); // Remove borda do painel principal
+
+        // Display
+        display = new JTextField();
+        display.setFont(new Font("Arial", Font.PLAIN, 24));
+        display.setHorizontalAlignment(JTextField.RIGHT);
+        display.setBorder(null); // Remove borda do display
+        display.setEditable(false);
+        panel.add(display, BorderLayout.NORTH);
+
+        // Painel de botões
+        JPanel botoesPanel = new JPanel();
+        botoesPanel.setLayout(new GridLayout(5, 3, 0, 0));
+        botoesPanel.setBorder(null); // Remove borda do painel de botões
+
+        // Texto dos botões
+        String[] botoes = {
+            "AC", "±", "/",
+            "7", "8", "9",
+            "4", "5", "6",
+            "1", "2", "3",
+            "0", ",", "="
+        };
+
+        // Criar e adicionar botões
+        for (String texto : botoes) {
+            JButton botao = criarBotao(texto);
+            botoesPanel.add(botao);
+        }
+
+        panel.add(botoesPanel, BorderLayout.CENTER);
+        add(panel);
+    }
+
+    private JButton criarBotao(String texto) {
+        JButton botao = new JButton(texto);
+        botao.setFont(new Font("Arial", Font.PLAIN, 18));
+        botao.setBorder(null); // Remove borda do botão
+        botao.setFocusPainted(false); // Remove efeito de foco
+        botao.setContentAreaFilled(false); // Remove fundo padrão
+        botao.setOpaque(true); // Permite definir cor de fundo
+        botao.setBackground(new Color(240, 240, 240)); // Cor de fundo cinza claro
+        botao.setMargin(new Insets(0, 0, 0, 0)); // Remove margens internas
+
+        // Adiciona ação ao botão
+        botao.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tratarCliqueBotao(texto);
+            }
+        });
+
+        return botao;
+    }
+
+    private void tratarCliqueBotao(String texto) {
+        switch (texto) {
+            case "AC":
+                display.setText("");
+                break;
+            case "±":
+                // Inverter sinal
+                if (!display.getText().isEmpty()) {
+                    double valor = Double.parseDouble(display.getText());
+                    display.setText(String.valueOf(-valor));
+                }
+                break;
+            case ",":
+                // Adicionar ponto decimal se não existir
+                if (!display.getText().contains(".")) {
+                    display.setText(display.getText() + ".");
+                }
+                break;
+            case "=":
+                calcularResultado();
+                break;
+            case "/":
+            case "*":
+            case "-":
+            case "+":
+                if (!display.getText().isEmpty()) {
+                    primeiroNumero = Double.parseDouble(display.getText());
+                    operacao = texto;
+                    display.setText("");
+                }
+                break;
+            default:
+                // Números
+                display.setText(display.getText() + texto);
+        }
+    }
+
+    private void calcularResultado() {
+        if (operacao != null && !display.getText().isEmpty()) {
+            double segundoNumero = Double.parseDouble(display.getText());
+            double resultado = 0;
+
+            switch (operacao) {
+                case "/":
+                    resultado = primeiroNumero / segundoNumero;
+                    break;
+                case "*":
+                    resultado = primeiroNumero * segundoNumero;
+                    break;
+                case "-":
+                    resultado = primeiroNumero - segundoNumero;
+                    break;
+                case "+":
+                    resultado = primeiroNumero + segundoNumero;
+                    break;
+            }
+
+            display.setText(String.valueOf(resultado));
+            operacao = null;
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            CalculadoraSemBordas calculadora = new CalculadoraSemBordas();
+            calculadora.setVisible(true);
+        });
+    }
+}

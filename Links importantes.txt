@@ -1,0 +1,3 @@
+https://github.com/cod3rcursos/curso-java   -- repositorio do curso
+
+https://blog.formacao.dev/iniciando-com-o-terminal-do-windows/  -- aprender a usar o terminal

@@ -1,0 +1,152 @@
+@id é a pk
+@Entity para mostrar qual vai ser a tabela criada
+@GeneratedValue(strategy = GenerationType.IDENTITY)  criação da chave sintetica com auto incremento
+@Table (name = " nome da tabela q tu quer")
+@Column (name = "precin",nullable = false, precision = 11, scale =2)
+nullable: se pode ser null
+lenght = 255 : tamanho max de caracter
+precision = 11 : tamanho de nums permitido
+scale =2 : casas apos a virgulas q mostra
+
+
+EntityManagerFactory emf = Persistence
+	                .createEntityManagerFactory("exercicios-jpa");
+	        EntityManager em = emf.createEntityManager();
+
+assim tu consegue interagir no banco de dados, atraves do entity manager
+
+
+ List<Usuario> usuarios = em.createQuery( "select u from Usuario u", Usuario.class)
+	        		.setMaxResults(4)
+	        		.getResultList();
+	        for (Usuario usuario: usuarios) {
+	        	System.out.println("ID:" + usuario.getId() + "E-MAIL: "+ usuario.getEmail());
+	        }
+
+
+jeito de obter os usuarios de uma tabela
+
+
+em.getTransaction().begin(); // inicar uma transação	       
+em.getTransaction().commit(); // dar entrada nela
+
+
+ALTERAÇÃO NO BANCO DE DADOS
+
+ Usuario usuario = em.find(Usuario.class, 1L);
+	        usuario.setNome("Leonardo");
+	        usuario.setEmail("Leonardo@lanche.com");
+	        em.merge(usuario); // atualiza no banco
+	        
+	        
+	        
+	        em.getTransaction().commit();
+	        em.close();
+	        emf.close();
+
+em.detach(usuario); // tirar o usuario do estado gerenciado
+
+DELETAR NA TABELA
+
+Usuario usuario = em.find(Usuario.class, 5L);
+    if (usuario !=null) {
+    	em.getTransaction().begin();
+    	em.remove(usuario);
+    	em.getTransaction().commit();
+    }
+
+
+DAO
+
+package infra;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
+public class DAO <E>{
+	
+	private static EntityManagerFactory emf;
+	private EntityManager em;
+	private Class <E> classe;
+	static {
+		try {
+			emf = Persistence.createEntityManagerFactory("exercicios-jpa");
+		}catch (Exception e) {
+			
+		}
+	}
+	public DAO() {
+		this(null);
+	}
+	public DAO(Class <E> classe) {
+		this.classe = classe;
+		em = emf.createEntityManager();
+	}
+	
+	public DAO<E> abrirTransacao () {
+		em.getTransaction().begin();
+		return this;
+	}
+	public DAO<E> fecharTransacao () {
+		em.getTransaction().commit();
+		return this;
+	}
+	public DAO <E> incluir (E entidade) {
+		em.persist(entidade);
+		return this;
+	}
+	public DAO <E> incluirAtomico (E entidade)/* atomico é tudo */ {
+		return this.abrirTransacao().incluir(entidade).fecharTransacao();
+	}
+	public List <E> obterTodos (int qtde, int offset) {
+		if (classe == null) {
+			throw new UnsupportedOperationException("clase nula");
+		}
+		String jpql = "select e from" + classe.getName() + "e";
+		TypedQuery<E> query = em.createQuery(jpql, classe);
+		query.setMaxResults(qtde);
+		query.setFirstResult(offset);
+		return query.getResultList();
+	}
+	public void fechar () {
+		em.close();
+	}
+}
+
+
+
+
+package teste.basico;
+
+import java.util.List;
+
+import infra.ProdutoDAO;
+import modelo.basico.Produto;
+
+public class ObterProdutos {
+	public static void main(String[] args) {
+		ProdutoDAO dao = new ProdutoDAO();
+		List<Produto> produtos = dao.obterTodos();
+		for (Produto produto : produtos) {
+			System.out.println("id:" + produto.getId() + "nome:" + produto.getNome());
+		}
+	}
+}
+
+
+
+
+
+package infra;
+
+import modelo.basico.Produto;
+
+public class ProdutoDAO extends DAO<Produto> {
+	public ProdutoDAO() {
+		super(Produto.class);
+	}
+}

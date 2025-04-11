@@ -1,0 +1,96 @@
+. Configuração Básica da Janela
+setSize(int width, int height)
+Define o tamanho da janela (largura x altura).
+Ex: setSize(800, 600);
+
+setTitle(String title)
+Define o título da janela.
+Ex: setTitle("Minha Janela");
+
+setDefaultCloseOperation(int operation)
+Define o comportamento ao fechar a janela. Valores comuns:
+
+JFrame.EXIT_ON_CLOSE → Encerra o programa ao fechar.
+
+JFrame.HIDE_ON_CLOSE → Apenas esconde a janela.
+
+JFrame.DISPOSE_ON_CLOSE → Fecha a janela, mas mantém o programa rodando se houver outras janelas.
+
+setLocationRelativeTo(null)
+Centraliza a janela na tela.
+
+setResizable(boolean resizable)
+Permite ou bloqueia o redimensionamento da janela.
+Ex: setResizable(false);
+
+2. Visibilidade e Layout
+setVisible(boolean visible)
+Torna a janela visível ou invisível.
+Ex: setVisible(true);
+
+setLayout(LayoutManager manager)
+Define o gerenciador de layout (ex: BorderLayout, FlowLayout, null para posicionamento manual).
+Ex: setLayout(new BorderLayout());
+
+3. Adição de Componentes
+add(Component component)
+Adiciona componentes (como JButton, JLabel, etc.) ao JFrame.
+Ex: add(new JButton("Clique aqui"));
+
+getContentPane()
+Retorna o painel de conteúdo do JFrame (para adicionar componentes com layouts mais complexos).
+Ex: getContentPane().add(componente);
+
+4. Manipulação de Estado
+pack()
+Ajusta o tamanho da janela automaticamente com base nos componentes internos.
+
+setExtendedState(int state)
+Define o estado da janela (ex: maximizada, minimizada).
+Ex:
+
+java
+Copy
+setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximiza a janela
+dispose()
+Fecha a janela e libera os recursos, mas não encerra o programa (a menos que seja a última janela).
+
+5. Personalização Avançada
+setIconImage(Image image)
+Define o ícone da janela (no canto superior esquerdo ou na barra de tarefas).
+Ex:
+
+java
+Copy
+setIconImage(Toolkit.getDefaultToolkit().getImage("caminho/do/icone.png"));
+setJMenuBar(JMenuBar menuBar)
+Adiciona uma barra de menus à janela.
+
+setUndecorated(boolean undecorated)
+Remove bordas e barra de título (útil para janelas personalizadas).
+Ex: setUndecorated(true);
+
+Exemplo Completo de Uso:
+java
+Copy
+import javax.swing.*;
+
+public class MinhaJanela extends JFrame {
+    public MinhaJanela() {
+        setTitle("Exemplo JFrame");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null); // Centraliza
+        setResizable(false);
+        
+        // Adiciona um componente
+        JLabel label = new JLabel("Olá, Mundo!", SwingConstants.CENTER);
+        add(label);
+        
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new MinhaJanela();
+    }
+}

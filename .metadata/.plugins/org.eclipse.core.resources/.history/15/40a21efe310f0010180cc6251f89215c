@@ -1,0 +1,22 @@
+package jdbc;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.Scanner;
+
+public class NovaPessoa {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner (System.in);
+		System.out.println("informe o nome: ");
+		String nome = scanner.nextLine();
+		Connection conexa = FabricaConexao.getconexao();
+		String sql = "insert into pessoas (nome) values (?)";
+		PreparedStatement stmt = conexao.prepareStatement (sql);
+		stmt.setString(1, nome);
+		
+		
+		
+		
+		scanner.close();
+	}
+}

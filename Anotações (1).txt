@@ -1,0 +1,599 @@
+Comentarios :
+// padrão
+/*
+	Múltiplas linhas
+*/ 
+
+
+
+usar double ou float
+existe printf em java
+utilizar final para que a variável n seja alterada
+println ex : ("area" + variável);
+
+
+var variavel = inicializa o valor ;    se utilizar var e ja atribuir oq vai nessa variavel o java descobre que tipo ela é.
+
+tipos primitivos :
+byte
+short
+int
+long
+mesma coisa mas a capidade de armazenamento muda
+
+double
+float
+mesma coisa mas a capacidade de armazenamento muda
+
+char = carcatere sobre aspas simples 'teste'
+boolean = false ou true 
+
+Notação ponto
+exemplo de utilização numa string
+String s = s.replace ("valor antigo", "valor novo");
+String s = s.toUpperCase(); tambem tém o Lower
+String s = s.concat ("adicionar algo");
+String s = s.charAt(valor) vai pegar o char na posição que vc escolher.
+String s = s.length () ; mostra o tamanho
+String s = s.startsWith ("escolha"); verifica se começa com a palavra q vc colocou, resultado será true ou false
+String s = s.endsWith ("escolha"); verifica se termina com a palavra q vc colocou, resultado será true ou false
+String s = s.equals ("valor"); saber se é igual ao q tu colocar
+String s = String.format ("funciona como um printf da string, só alocar o s por exemplo num println");
+
+Scanner
+importar o scanner .util
+Scanner entrada = new Scanner (System.in);  inicializa o scanner e mostra que vao ter entradas
+entrada.close ();  fecha o scanner
+para ler alguma variavel exemplo: int temp = entrada.nextInt (); 
+String s = entrada.nextLine(); 
+Também é bem utlizado inicializar o Scanner com o nome de variavel scanner para ser facil de reconhecer.
+OBS: Ao ler um tipo primivo de número (int,float,double) é necessário colocar uma leitura de string ( entrada/scanner.nextLine();), isso pois ao ler um inteiro ele não consome o \n e é necessario para não dar erro.
+
+Wrapper:
+
+- Classe de cada tipo primitivo
+
+- As classes são escritas com a primeira letra maiuscula
+
+- Exemplo: Integer, Double, Character, Boolean
+
+- Estes tem acessos a métodos e atributos
+
+- Você não pode converter de uma classe para a outra, exemplo: Integer para Double ou vice-versa
+
+
+
+Tipo primitivo:
+
+- Tipos primitivos de dados, sozinhos não representam muita coisa, mas você pode juntar e definir esse tipos primitivos como atributos de uma classe, por exemplo Cliente. O Cliente pode ter nome(string), idade(int), ativo(boolean).
+
+- Estes não têm acesso a atributos e métodos, eles apenas armazenam um valor
+
+- Nesse caso você pode converter de um tipo primtivo para outro tipo primitivo, depende do que você quer converter: int para double, é certo e o Java faz essa conversão de forma implicita. double para int, nesse caso é preciso fazer o cast, pois o double não cabe no int.
+
+
+
+String:
+
+- Toda String que você declarar vai ter acesso a atributos e métodos, logo não é um tipo primitivo.
+
+- Você pode converter um tipo primitivo em uma String, mas o contrário deve-se pensar. Por exemplo nem toda String é um número, mas todo número é uma String.
+
+Conversão
+
+existe a conversão explicita (cast) ex : float  a = (float) 1.0 ;
+int b = 4 ;
+byte c = (byte) b ;  
+nesse caso do int para byte se deixar em cast e o valor for suportado n tem problema algum
+double d = 1;
+int e = (int) d;
+
+para conversão para string tem basicamente duas formas
+1: utilizando wrapper ex :
+Integer num1 = 1000;
+print (num1.toString() ) ;  assim transformamos um numero em string
+
+2: utilizando numero primitivo mas com a função wrapper no print
+
+int num2 = 1000
+print (Integer.toString(num2) ) ;  Assim formamos um primitivo para string
+
+Conversão String para Numero
+
+1: Utilizando o JOption
+
+import javax.swing.JOptionPane;
+String valor1 = JOptionPane.showInputDialog("Digite o numero");
+		String valor2 = JOptionPane.showInputDialog("Digite o numero");
+		double num1 = Double.parseDouble(valor1);
+		double num2 = Double.parseDouble(valor2);
+		System.out.printf("%f e %f", num1, num2);
+
+
+2: utilizando o scanner
+
+import java.util.Scanner;
+Scanner scanner = new Scanner(System.in);
+		String valor3 = scanner.nextLine();
+		String valor4 = scanner.nextLine();
+		double num3 = Double.parseDouble(valor3);
+		double num4 = Double.parseDouble(valor4);
+		System.out.printf("%s e %s", num3, num4);
+
+		scanner.close();
+
+Operador logico
+
+&& : E  (se tiver false vai dar false)
+|| : ou (se 1 for true vai ser true)
+^: xor  (true se for diferente e false se forem iguais
+! : confirma se é nao, se for false vai dar true
+!! : se for true da true
+
+operadores :
+> maior
+< menor
+!= diferente
+>= maior ou igual
+<= menor ou igual
+== igual
+
+Operador ternario :
+
+double media= 5;
+	String resultado = media >= 7.0 ? "Aprovado" : "Reprovado" ;   ? "se sim oq vai mostrar" : "senao oq mostra" ;
+
+para comparar strings é melhor utilizar da função .equals
+
+Jdk : dev utiliza
+
+Jre: usuario final, ambiente de execução
+
+Jvm: interprete 
+
+
+SWITCH (variável)
+
+case valor : 
+condição
+break;
+
+default:
+condição
+
+Classes
+
+atributos de um carro ex: cor, modelo, ano.
+métodos de um carro: ligar, desligar, andar, frear   (comportamentos)
+
+objeto == instancia 
+
+para valores que não irão ser alterados utilizar o static antes de declarar ele, para na hora de instanciar não se fazer necessário. 
+Obs: métodos também podem ser static e usar eles da mesma forma.
+EX para acessar: 
+
+system.out.println (Classe.variavel);
+
+
+
+
+Array
+
+int [] a = new int [tamanho do array] ; 
+
+for each 
+utilizado para collections 
+ex de utilização :
+public static void main(String[] args) {
+	double [] notas = {7.7, 9,4.5};
+	for (double nota : notas) {
+		System.out.println(nota);
+	}
+}
+
+matriz 
+ex: Scanner scanner = new Scanner (System.in);
+	int total = 0;
+	System.out.print("Quantidade de alunos: ");
+	int tamanhoAlunos = scanner.nextInt();
+	System.out.print("Quantidade de notas: ");
+	int qntdNotas = scanner.nextInt();
+	double [] [] notasTurma = new double [tamanhoAlunos] [qntdNotas];
+	for(int i=0; i< notasTurma.length;i++) {
+		for (int j=0;j<qntdNotas; j++) {
+			System.out.printf("Informe a nota %d do aluno %d: ",i+1,j+1);
+			notasTurma [i] [j] = scanner.nextDouble();
+			total+= notasTurma[i][j];
+		}
+		
+	}
+
+hashcode e equals
+
+equals retorna um boolean para ver se é igual
+hashcode separa aquilo que claramente não é igual do que pode ser igual (baseado no tamanho)
+
+ex de equals
+public boolean equals(Object objeto) // cria um objeto com nome objeto {
+		if (objeto instanceof Usuario) {  // garente que o tipo seja igual ao do Usuario
+			Usuario outro = (Usuario) objeto; // faz cast de objeto para tipo Usuario
+			boolean nomeIgual = outro.nome.equals(this.nome); // retorna true caso o nome seje igual
+			boolean emailIgual = outro.email.equals(this.email); //retorna true caso o email seje igual
+			return nomeIgual && emailIgual;
+		}
+		else {
+			return false;
+		}
+	}
+
+Obs: o eclipse tambem pode gerar de forma automatica equals e hashcode.
+
+Set
+não aceita repetição
+HashSet <tipo> conjunto = new HashSet<tipo>(); // criar um hashset
+	conjunto.add(1);
+	conjunto.add("teste");
+.add para adicionar algo no conjunto
+.size () para ver o tamanho deste conjunto
+.remove (oq quer remover) remove algo do conjunto
+.contais(oq quer ver) ve se tem o valor no conjunto (retorna boolean)
+conjunto.addAll (outroconjunto) faz a uniao de conjuntos
+conjunto.retaiAll (outro conjunto) interseção (bota só oq tem em comum)
+
+SortedSet<String> conjunto = new TreeSet<>(); //criar um conjunto ordenado
+
+List
+ArrayList<Usuario> lista = new ArrayList<Usuario>(); criar uma lista
+pode ter repetição
+tem índice para acessar
+é ordenado por padrão[
+lista.add(new Usuario ("Pizza"));  ou Usuário l1 = new Usuário ("pizza");
+				      lista.add (l1);
+System.out.println(lista.get(1).nome);  // printar baseado no índice
+lista.remove (índice) para remover pelo índice
+lista.contains (); ver se tem na lista
+
+Fila
+Queue<String> fila = new LinkedList<> (); criar uma fila
+.add() lançará uma exceção caso a fila esteja cheia.
+
+.offer() retorna falso caso a fila esteja cheia.
+System.out.println(fila.peek()); // retorna null caso a fila esteja vazia
+System.out.println(fila.element()); // da erro caso a fila esteja vazia
+System.out.println(fila.remove());// obtem proximo item da fila e remove
+System.out.println(fila.poll()); // obtem proximo item da fila e remove
+
+Pilha
+Deque<String> livros = new ArrayDeque<String>()	; //criar pilha
+.add() lançará uma exceção caso a fila esteja cheia.
+.offer() retorna falso caso a fila esteja cheia.
+.pop ();
+.remove ();
+.size();
+.clear ();
+.contains ();
+
+Map
+Map<Integer, String> usuarios = new HashMap<>(); criar map
+.size ();
+.isEmpty ();
+.ketset (); mostra as chaves de forma aleatória
+.values(); mostra oq tem de string
+.entrySet (); mostra tudo int e string
+.containskey (); para ver se tem no map
+.containsValue (); para ver se tem o valor
+.get ();
+
+Encapsulamento
+
+tipo uma caixa preta
+deixar a informação privada (escondida) ex carro: temos interação com pedal,volante, mas não temos com o motor diretamente 
+private : so pode ser acessado pela classe
+package: somente pelo pacote  (caso não colocar qual desses tipo é, por padrao vai esse)
+protected: somente pela classe ou por herança
+public: por tudo no pacote, classe, herança...
+
+Herança
+
+em software tem mais composição do que herança
+composição : carro TEM UM motor
+	     carro tem portas
+
+herança:   civic é um carro
+	   maça é uma fruta
+
+java só permite herança de uma classe apenas
+
+O super é útil para evitar sobrescrita acidental, reutilizar código da superclasse e garantir que a lógica herdada seja preservada.
+class Animal {
+    String tipo = "Genérico";
+
+    Animal() {
+        System.out.println("Animal criado");
+    }
+
+    void fazerSom() {
+        System.out.println("Som genérico");
+    }
+}
+class Cachorro extends Animal {
+    Cachorro() {
+        super(); // Chama o construtor da superclasse
+        System.out.println("Cachorro criado");
+    }
+ void fazerSom() {
+        super.fazerSom(); // Chama o método da superclasse
+        System.out.println("Au Au!");
+    }
+
+Polimorfismo
+
+estático: sobrecarga
+
+dinâmico: precisa ter herença
+
+
+Abstração
+
+é uma simplificação, pegar aquilo que importa no mundo real e jogar no software 
+
+Enum
+utilizada quando tem uma quantidade determinada de opções
+
+get
+public String getNome () {
+	return = nome;
+}
+set
+public void setNome (String nome) {
+	this.nome = nome;
+}
+pode se aplicar mais logicas no setter
+
+Interface
+só pode colocar um metodo quando for utilizar lambda
+para outras funcionalidades ela é uma forma de garantir que um metodo seja implementado por uma classe
+ imports nome da interface
+
+Lambda
+
+for each tradiconal
+for (String nome : aprovados) {
+	system.out.println(nome); }
+
+for each lambda
+aprovados.forEach(nome -> system.out.println(nome));
+
+for each method reference
+aprovaods.forEach (System.out::println);
+
+static void meuImprimir (String nome) {
+	System.out.println("oi meu nome é " + nome);
+		}
+//lambda #02
+	aprovados.forEach(nome -> meuImprimir(nome));
+//method reference #02
+	aprovados.forEach(ForEach::meuImprimir);
+
+Predicado
+Predicate<Produto> isCaro = prod -> (prod.preco * (1 - prod.desconto) >= 750);
+	Produto p1 = new Produto("notebook", 3330, 0.2);
+	System.out.println(isCaro.test(p1));
+sempre retorna false ou true
+
+Consumer
+recebe e nao retorna nada
+Consumer<Produto> imprimir = p -> System.out.print(p.nome); 
+	Produto p1 = new Produto("caneta", 20, 0.3);
+	imprimir.accept(p1);
+
+Function
+Function<Integer, String> parOuImpar = numero -> numero%2 == 0 ? "Par" : "Impar";
+	Function<String, String> oResultadoE = valor -> "o resultado é "+ valor;
+	Function<String, String> empolgado = valor -> valor + "!!!";
+	String resultadoFinal = parOuImpar.andThen(oResultadoE).andThen(empolgado).apply(32);
+	System.out.println(resultadoFinal);
+
+Supplier
+Supplier<List<String>> umaLista = () -> Arrays.asList("nirto","nati");
+	System.out.println(umaLista.get());
+
+UnaryOperator
+	UnaryOperator<Integer> maisDois = n ->  n + 2;
+	UnaryOperator<Integer> vezesDois = n ->  n * 2;
+	UnaryOperator<Integer> menosDois = n ->  n - 2;
+	System.out.println(maisDois.andThen(vezesDois).andThen(menosDois).apply(4));
+
+BinaryOperator and Bifunction
+BinaryOperator<Double> media = (n1,n2) -> (n1 + n2 )/ 2;
+	System.out.println(media.apply(7.6, 7.8));
+	BiFunction<Double, Double, String> resultado = (n1,n2) -> ((n1+n2) /2) >= 7 ? "Aprovado " : "Reprovado animal";
+	System.out.println(resultado.apply(7.6, 5.0));
+	BiFunction<Double, Double, String> resultado2 = (n1,n2) -> {
+		double notafinal = (n1+n2) /2;
+		return notafinal >=7 ? "Aprovado" : "Reprovado";
+	};
+	System.out.println(resultado2.apply(7.6, 8.9));
+
+Criação de ARRAY, LIST, STREAM e seus prints
+
+Consumer<String> print = System.out::print;  //definir um print geral para n escrever tanto
+		Stream<String> langs = Stream.of("Java ", "Lua "," js\n"); // criando a stream
+		String [] maisLangs = { "Python ", "Lisp ", "Perl\n"}; // criando uma string
+		Stream.of(maisLangs).forEach(print); // print com stream
+		Arrays.stream(maisLangs).forEach(print); // print com arrays
+		Arrays.stream(maisLangs, 1,2).forEach(print); // printa do indice 1 até o 2 (n printando o 2)
+		List<String>outraLang = Arrays.asList("c "," java"); // criação da lista
+		outraLang.parallelStream().forEach(print); // imprime de forma aleatoria
+
+Map
+
+é uma stream de dados que vai fazer acessar um vetor transformando nas condiçoes que voce impor 
+
+CODIGO USANDO VARIAS FORMAS
+
+Consumer<String> print = System.out ::println; // criei metodo para printar
+		List<String> marcas = Arrays.asList("fiat ", "bmw ", "porsche "); // criei uma list
+		marcas.stream().map(m->m.toUpperCase()).forEach(print); // usando map botei tudo em CAPS
+		// UnaryOperator<String> maiuscula = n -> n.toUpperCase();
+		UnaryOperator<String> primeiraLetra = n-> n.charAt(0) + ""; // pegar primeiro char
+		// UnaryOperator<String> grito = n -> n +"!!!";
+		System.out.println("\n\nUsando composiçao");
+		marcas.stream().map(Utilitario.maiuscula).map(primeiraLetra).map(Utilitario::grito).forEach(print); // printando tudo junto
+		 
+	}
+
+CODIGO DO DESAFIO 
+List<Integer> nums = Arrays.asList(1,2,3,4,5,6,7,8,9);
+		nums.stream().map(Integer::toBinaryString ).forEach(System.out::println); // transforma pra binario
+		Function<String, Integer> binarioParaInt = s-> Integer.parseInt(s,2); // volta de binario para int
+	
+	UnaryOperator<String> inverter = s-> new StringBuilder(s).reverse().toString(); // inverte
+	nums.stream().map(Integer::toBinaryString ).map(inverter).forEach(System.out::println);
+	nums.stream().map(Integer::toBinaryString ).map(binarioParaInt).forEach(System.out::println);
+
+Filter
+
+é um filtro baseado nas condiçoes que voce impor
+
+codigo de filter
+List<Aluno> alunos = Arrays.asList(a1,a2,a3);
+	Predicate<Aluno> aprovado = a-> a.nota>=7;
+	Function<Aluno, String> saudacao = a-> "Parabens " + a.nome + " vc foi aprovado!";
+	alunos.stream().filter(aprovado).map(saudacao).forEach(System.out::print);
+
+Reduce
+código:
+List<Integer> numeros = Arrays.asList(1,2,3,4,5,6);
+	BinaryOperator<Integer> soma = (ac,n) -> ac + n;
+	Integer total = numeros.stream().reduce(soma).get();
+	Integer total2 = numeros.parallelStream().reduce(100, soma); // vai adicionar 100  a cada ciclo ex : 100 + 1, 201+2...
+	numeros.stream().filter(n -> n >3).reduce(soma).ifPresent(System.out::println); // resultado foi um Opcional <Integer>
+
+Match
+.stream().allMatch (método para conferir)  - confere se todas as  informaçoes da match são verdadeiras - retorna true ou false
+.stream ().anyMatch () - confere se pelo menos alguma informação bate e retorna true ou false 
+.stream().noneMatch () - confere se nenhuma informação bate, retorna true ou false
+
+Min e Max
+para utilizar dessas funções é necessário a utilização de um Comparator
+Comparator <Classe> nomeDaVariavel = (Variavel1,Variavel2) -> //lambda {
+	if (condições) return -1 ou 0
+	if // mesmo esquema
+	if // mesmo esquema }
+.stream().max (nomeDaVariavel).get();
+.stream().min (nomeDaVariavel).get();
+
+Distinct
+O método .distinct() em Java Streams é usado para remover elementos duplicados de um fluxo de dados. 
+Ele utiliza o método .equals() dos objetos para determinar a duplicidade.
+  numeros.stream().distinct().forEach(System.out::println);
+
+Limit : define o limite que vai ser mostrado
+Skip: pula 
+
+Tratamento de erros
+compilação : erro no codigo-fonte
+execução: erro na parte da interface (ex falta de internet).
+erro: algo que geralmente não tem como consertar no fluxo normal
+exceção: algo que pode ser tratado em fluxo. (é um desvio de fluxo)
+
+try {
+	oq acha que pode acontecer algum erro
+}
+catch (Exception e) {
+	print mensagem e .getmessage();
+}
+
+//excecao verificada
+	static void geraErro1 () {
+		 throw new RuntimeException("Ocorreu um super erro bb");
+	}
+//excecao não verificada
+	static void geraErro2 () throws  Exception{
+		
+	throw new Exception("sexo violento bb");
+		}
+
+é muito recomendado utilizar as excessoes que tem no java
+exemplos
+  public Aluno(String nome) {
+        if (nome == null) {
+            throw new IllegalArgumentException("Nome não pode ser nulo.");
+        }
+        if (nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode estar vazio.");
+        }
+        if (nome.length() < 2 || nome.length() > 50) {
+            throw new IllegalArgumentException("Nome deve ter entre 2 e 50 caracteres.");
+        }
+        if (!nome.matches("^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$")) {
+            throw new IllegalArgumentException("Nome deve conter apenas letras e espaços.");
+        }
+finally sempre vai ser chamado, colocar depois do catch
+
+jUnit é para aplicar testes no java
+
+Generics 
+cria uma classe generica (object) e o objetivo é transformar no q for preciso
+exemplo de criação de uma classe generica
+public class Caixa <Tipo> {
+	private Tipo coisa;
+
+exemplo da utilização 
+Caixa <String> caixaA = new Caixa <>();
+	caixaA.aguardar("segredo!");
+	System.out.println(caixaA.abrir());
+	Caixa <Double> caixab = new Caixa <>();
+
+criação de uma lista generic
+public static <T> T getUltimo2(List<T> lista)
+
+Comparable
+A interface Comparable<T> em Java é usada para definir uma ordem natural para objetos de uma classe. Ela tem um único método, compareTo(T o), que deve ser implementado para comparar objetos.
+
+
+Padrão observer 
+
+O padrão Observer define um mecanismo para que objetos observadores (Observers) sejam notificados sobre mudanças em um objeto observado (Subject), mantendo um baixo acoplamento entre eles.
+
+Elementos principais
+Subject (Sujeito/Observável)
+
+Mantém uma lista de observadores.
+
+Possui métodos para adicionar/remover observadores.
+
+Notifica os observadores quando há mudanças no seu estado.
+
+Observer (Observador)
+
+Define uma interface para receber notificações do Subject.
+
+Cada classe que precisa ser notificada implementa essa interface.
+
+
+
+
+
+module meuModulo {
+    exports com.exemplo.minhapackage;
+    requires outroModulo; // Importa outro módulo
+}
+
+
+🔹 Explicação:
+
+exports → Torna um pacote disponível para outros módulos.
+
+requires → Importa outro módulo para ser usado dentro deste.
+
+
+
+No contexto de modularidade, um Logger é um módulo separado e reutilizável que gerencia a geração de logs para diferentes partes do sistema.
+Ele permite que outros módulos capturem eventos, erros e mensagens informativas sem precisar duplicar código.
+
+1️⃣ logInfo(String message) → Registra mensagens informativas.
+2️⃣ logError(String message) → Registra erros do sistema.
+3️⃣ logDebug(String message) → Registra mensagens de depuração (opcional).
+4️⃣ logWarning(String message) → Registra alertas (opcional).

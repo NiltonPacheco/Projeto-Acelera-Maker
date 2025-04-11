@@ -1,0 +1,5 @@
+CTRL + ESPAÇO para dar opções de completar 
+CTRL + M Tela
+CTRL + SHIFT + F11 executar programa 
+CTRL + SHIFT + F identar automático 
+CTRL + SHIFT + O organiza os imports

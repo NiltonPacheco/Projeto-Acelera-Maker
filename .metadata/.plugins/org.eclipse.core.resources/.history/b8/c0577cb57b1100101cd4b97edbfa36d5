@@ -1,0 +1,14 @@
+package calculo;
+
+import java.util.Arrays;
+
+import calculo.interno.OperacoesAritimeticas;
+
+public class Calculadora {
+	private OperacoesAritimeticas op = new OperacoesAritimeticas();
+	
+	public double soma (double... nums) {
+		return Arrays.stream(nums).reduce(0.0, (t,a) -> t+a);
+	}
+
+}

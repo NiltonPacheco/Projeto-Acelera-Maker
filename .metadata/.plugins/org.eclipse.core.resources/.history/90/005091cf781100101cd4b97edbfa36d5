@@ -1,0 +1,171 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class CalculadoraLayoutCorreto extends JFrame {
+    private JTextField display;
+    private double primeiroNumero;
+    private String operacao;
+    private boolean novoNumero = true;
+
+    public CalculadoraLayoutCorreto() {
+        // Configuração da janela
+        setTitle("Calculadora");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(300, 400);
+        setLocationRelativeTo(null);
+        getRootPane().setBorder(null);
+
+        // Painel principal
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBorder(null);
+
+        // Display
+        display = new JTextField("0");
+        display.setFont(new Font("Arial", Font.PLAIN, 24));
+        display.setHorizontalAlignment(JTextField.RIGHT);
+        display.setBorder(null);
+        display.setEditable(false);
+        panel.add(display, BorderLayout.NORTH);
+
+        // Painel de botões - layout 5x4 para incluir todas operações
+        JPanel botoesPanel = new JPanel(new GridLayout(5, 4, 0, 0));
+        botoesPanel.setBorder(null);
+
+        // Botões na ordem CORRETA conforme sua imagem + operações adicionais
+        String[][] botoes = {
+            {"AC", "±", "+", "-"},
+            {"7", "8", "9", "*"},
+            {"4", "5", "6", "/"},
+            {"1", "2", "3", "="},
+            {"0", "", ".", ""}
+        };
+
+        // Criando todos os botões
+        for (String[] linha : botoes) {
+            for (String texto : linha) {
+                if (texto.isEmpty()) {
+                    botoesPanel.add(new JLabel("")); // Espaço vazio
+                } else {
+                    JButton botao = criarBotao(texto);
+                    
+                    if (texto.matches("[+\\-*/]")) {
+                        botao.addActionListener(e -> tratarOperacao(texto));
+                    } else if (texto.equals("=")) {
+                        botao.addActionListener(e -> calcularResultado());
+                    } else {
+                        botao.addActionListener(e -> tratarCliqueBotao(texto));
+                    }
+                    
+                    botoesPanel.add(botao);
+                }
+            }
+        }
+
+        panel.add(botoesPanel, BorderLayout.CENTER);
+        add(panel);
+    }
+
+    private JButton criarBotao(String texto) {
+        JButton botao = new JButton(texto);
+        botao.setFont(new Font("Arial", Font.PLAIN, 18));
+        botao.setBorder(null);
+        botao.setFocusPainted(false);
+        botao.setContentAreaFilled(false);
+        botao.setOpaque(true);
+        
+        // Cores diferentes para números e operações
+        if (texto.matches("[0-9.]")) {
+            botao.setBackground(new Color(240, 240, 240)); // Cinza claro para números
+        } else {
+            botao.setBackground(new Color(200, 200, 200)); // Cinza médio para operações
+        }
+        
+        botao.setMargin(new Insets(0, 0, 0, 0));
+        return botao;
+    }
+
+    private void tratarCliqueBotao(String texto) {
+        if (texto.equals("±")) {
+            // Inverter sinal
+            double valor = Double.parseDouble(display.getText());
+            display.setText(String.valueOf(-valor));
+        } else if (texto.equals(".")) {
+            // Ponto decimal
+            if (novoNumero) {
+                display.setText("0.");
+                novoNumero = false;
+            } else if (!display.getText().contains(".")) {
+                display.setText(display.getText() + ".");
+            }
+        } else if (texto.equals("AC")) {
+            // Limpar tudo
+            display.setText("0");
+            novoNumero = true;
+            operacao = null;
+        } else {
+            // Números
+            if (novoNumero || display.getText().equals("0")) {
+                display.setText(texto);
+                novoNumero = false;
+            } else {
+                display.setText(display.getText() + texto);
+            }
+        }
+    }
+
+    private void tratarOperacao(String op) {
+        if (!novoNumero) {
+            if (operacao != null) {
+                calcularResultado();
+            }
+            primeiroNumero = Double.parseDouble(display.getText());
+            operacao = op;
+            novoNumero = true;
+        }
+    }
+
+    private void calcularResultado() {
+        if (operacao != null && !novoNumero) {
+            double segundoNumero = Double.parseDouble(display.getText());
+            double resultado = 0;
+
+            switch (operacao) {
+                case "+":
+                    resultado = primeiroNumero + segundoNumero;
+                    break;
+                case "-":
+                    resultado = primeiroNumero - segundoNumero;
+                    break;
+                case "*":
+                    resultado = primeiroNumero * segundoNumero;
+                    break;
+                case "/":
+                    if (segundoNumero != 0) {
+                        resultado = primeiroNumero / segundoNumero;
+                    } else {
+                        display.setText("Erro");
+                        novoNumero = true;
+                        operacao = null;
+                        return;
+                    }
+                    break;
+            }
+
+            // Formata o resultado para remover .0 quando for inteiro
+            display.setText(resultado % 1 == 0 ? 
+                String.valueOf((int) resultado) : String.valueOf(resultado));
+            
+            operacao = null;
+            novoNumero = true;
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            CalculadoraLayoutCorreto calculadora = new CalculadoraLayoutCorreto();
+            calculadora.setVisible(true);
+        });
+    }
+}

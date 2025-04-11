@@ -1,0 +1,14 @@
+package calculadora;
+
+import java.awt.Color;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+@SuppressWarnings("serial")
+public class Display extends JPanel{
+	private final JLabel label;
+	public Display() {
+		lebal = new JLabel("1234,56");
+	} 
+}

@@ -1,0 +1,182 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class CalculadoraCompleta extends JFrame {
+    private JTextField display;
+    private double primeiroNumero;
+    private String operacao;
+    private boolean novoNumero = true;
+
+    public CalculadoraCompleta() {
+        // Configuração básica da janela
+        setTitle("Calculadora");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(300, 400);
+        setLocationRelativeTo(null);
+        getRootPane().setBorder(null);
+
+        // Painel principal
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBorder(null);
+
+        // Display
+        display = new JTextField("0");
+        display.setFont(new Font("Arial", Font.PLAIN, 24));
+        display.setHorizontalAlignment(JTextField.RIGHT);
+        display.setBorder(null);
+        display.setEditable(false);
+        panel.add(display, BorderLayout.NORTH);
+
+        // Painel de botões
+        JPanel botoesPanel = new JPanel();
+        botoesPanel.setLayout(new GridLayout(5, 3, 0, 0));
+        botoesPanel.setBorder(null);
+
+        // Texto dos botões - agora incluindo todas as operações
+        String[] botoes = {
+            "AC", "±", "/",
+            "7", "8", "9",
+            "4", "5", "6",
+            "1", "2", "3",
+            "0", ",", "="
+        };
+
+        // Criar e adicionar botões
+        for (String texto : botoes) {
+            JButton botao = criarBotao(texto);
+            botoesPanel.add(botao);
+        }
+
+        // Painel adicional para os botões de operação que faltavam
+        JPanel operacoesPanel = new JPanel();
+        operacoesPanel.setLayout(new GridLayout(4, 1, 0, 0));
+        operacoesPanel.setBorder(null);
+
+        String[] operacoes = {"+", "-", "*", "/"};
+        for (String op : operacoes) {
+            JButton botao = criarBotao(op);
+            operacoesPanel.add(botao);
+        }
+
+        // Adicionando os painéis ao painel principal
+        panel.add(botoesPanel, BorderLayout.CENTER);
+        panel.add(operacoesPanel, BorderLayout.EAST);
+
+        add(panel);
+    }
+
+    private JButton criarBotao(String texto) {
+        JButton botao = new JButton(texto);
+        botao.setFont(new Font("Arial", Font.PLAIN, 18));
+        botao.setBorder(null);
+        botao.setFocusPainted(false);
+        botao.setContentAreaFilled(false);
+        botao.setOpaque(true);
+        botao.setBackground(texto.matches("[0-9,]") ? new Color(240, 240, 240) : new Color(220, 220, 220));
+        botao.setMargin(new Insets(0, 0, 0, 0));
+
+        botao.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tratarCliqueBotao(texto);
+            }
+        });
+
+        return botao;
+    }
+
+    private void tratarCliqueBotao(String texto) {
+        switch (texto) {
+            case "AC":
+                display.setText("0");
+                novoNumero = true;
+                operacao = null;
+                break;
+            case "±":
+                if (!display.getText().equals("0")) {
+                    double valor = Double.parseDouble(display.getText());
+                    display.setText(String.valueOf(-valor));
+                }
+                break;
+            case ",":
+                if (novoNumero) {
+                    display.setText("0.");
+                    novoNumero = false;
+                } else if (!display.getText().contains(".")) {
+                    display.setText(display.getText() + ".");
+                }
+                break;
+            case "=":
+                calcularResultado();
+                novoNumero = true;
+                break;
+            case "+":
+            case "-":
+            case "*":
+            case "/":
+                if (!novoNumero) {
+                    if (operacao != null) {
+                        calcularResultado();
+                    }
+                    primeiroNumero = Double.parseDouble(display.getText());
+                    operacao = texto;
+                    novoNumero = true;
+                }
+                break;
+            default: // Números
+                if (novoNumero || display.getText().equals("0")) {
+                    display.setText(texto);
+                    novoNumero = false;
+                } else {
+                    display.setText(display.getText() + texto);
+                }
+        }
+    }
+
+    private void calcularResultado() {
+        if (operacao != null && !novoNumero) {
+            double segundoNumero = Double.parseDouble(display.getText());
+            double resultado = 0;
+
+            switch (operacao) {
+                case "+":
+                    resultado = primeiroNumero + segundoNumero;
+                    break;
+                case "-":
+                    resultado = primeiroNumero - segundoNumero;
+                    break;
+                case "*":
+                    resultado = primeiroNumero * segundoNumero;
+                    break;
+                case "/":
+                    if (segundoNumero != 0) {
+                        resultado = primeiroNumero / segundoNumero;
+                    } else {
+                        display.setText("Erro");
+                        novoNumero = true;
+                        operacao = null;
+                        return;
+                    }
+                    break;
+            }
+
+            // Formata o resultado para remover .0 quando for inteiro
+            if (resultado == (int) resultado) {
+                display.setText(String.valueOf((int) resultado));
+            } else {
+                display.setText(String.valueOf(resultado));
+            }
+            operacao = null;
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            CalculadoraCompleta calculadora = new CalculadoraCompleta();
+            calculadora.setVisible(true);
+        });
+    }
+}
